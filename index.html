@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mp.css">
+    <script src="https://kit.fontawesome.com/65dd5db15f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Righteous">
+    <script>
+        function red(){
+            let h = document.getElementById('heart')
+            h.style.color="red";
+        }
+        function white(){
+            let h = document.getElementById('heart')
+            h.style.color="";
+        }
+      
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="musicplayer">
+            <div class="nav" >
+                <div><i class="fa-regular"> ON_Fire</i></div>
+                <div class="nav"><i class="fa-solid fa-heart" id="heart" onclick="red()" ondblclick="white()" ></i></div>
+            </div>
+            <img src="/rsr.jpg"alt="music_img" id="img">
+            <div class="name">
+                <div class="song_name" id="song_name" >RAM SIYA RAM</div>
+                <div id="writter" >DJ GLORY</div>
+            </div>
+            <div class="song" >
+                <audio src="/Ram Siya Ram(PagalWorld.com.se).mp3" id="s" ></audio>
+                <input type="range" value="0"  id="progress">
+            </div>
+            <div class="control">
+                <div><i class="fa-solid fa-angles-left" id="control_back" onclick="back()" ></i></div>
+                <div><i class="fa-solid fa-play" id="control_icon" onclick="playPause()" ></i></div>
+                <div><i class="fa-solid fa-angles-right" id="control_forw"  onclick="forw()" ></i></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let progress=document.getElementById('progress');
+        let song=document.getElementById('s');
+        let control_icon=document.getElementById('control_icon');
+        let control_back = document.getElementById('control_back');
+        let control_forw = document.getElementById('control_forw');
+        
+        song.onloadedmetadata = function(){
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+        function playPause(){
+            if(control_icon.classList.contains("fa-pause")){
+                song.pause();
+                control_icon.classList.add("fa-play");                
+                control_icon.classList.remove("fa-pause");                
+            }
+            else{
+                song.play();
+                control_icon.classList.add("fa-pause");                
+                control_icon.classList.remove("fa-play");   
+            }
+        }
+        if(song.play()){
+            setInterval(()=>{
+                progress.value = song.currentTime;
+            },500);
+        }
+        progress.onchange = function(){
+            song.play();
+            song.currentTime = progress.value;
+            control_icon.classList.add("fa-pause");                
+            control_icon.classList.remove("fa-play");  
+        }
+        function back(){
+            song.currentTime-=10;
+            progress.value = song.currentTime;
+        }
+        function forw(){
+            song.currentTime+=10;
+            progress.value = song.currentTime;
+        }
+    </script>
+</body>
+
+</html>
